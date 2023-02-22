@@ -77,9 +77,7 @@ align-items: center;
 
 `;
 export const BotãoSair = styled.button`
-  margin-left: 1rem;
-background-color: red;
-  margin-right: 10rem;
+  background-color: red;
 `;
 
 export const Cadastrar = styled.button`

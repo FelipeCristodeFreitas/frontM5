@@ -1,11 +1,11 @@
 export interface Jogos {
   id: string;
-  name: string;
+  title: string;
   categoria: string;
   description: string;
-  imageUrl: string;
-  ano: string;
-  score: string;
-  treiler: string;
-  gameplay: string;
+  CoverImageUrl: string;
+  year: number;
+  imdbScore: number;
+  trailerYouTubeUrl: string;
+  gameplayYouTubeUrl: string;
 }

@@ -1,6 +1,5 @@
 import {
   AppBar,
-  CardActions,
   Container,
   Grid,
   IconButton,
@@ -14,12 +13,12 @@ import { JogosItem } from "components/JogoItem/JogoItem";
 import { Jogos } from "components/TodosJogos/Interface";
 import { Baner, Card1 } from "./style1";
 
-type FavoriteScreenProps = {
+/*type FavoriteScreenProps = {
   product: Jogos;
   onSelect: (data: Jogos) => void;
-};
+};*/
 const FavoriteScreen = () => {
-  const { favorites, setFavorites } = useContext(favoritoContext);
+  const { favorites } = useContext(favoritoContext);
   const handleSelection = (product: Jogos) => {};
   return (
     <div>
@@ -39,7 +38,7 @@ const FavoriteScreen = () => {
             <div style={{ marginTop: `5rem` }}>
               <Grid container spacing={2}>
                 {favorites?.map((products) => (
-                  <Grid item xs={12} sm={6} md={4} lg={3} key={products.name}>
+                  <Grid item xs={12} sm={6} md={4} lg={3} key={products.title}>
                     <Card1>
                     <JogosItem product={products} onSelect={handleSelection} />
                 </Card1>

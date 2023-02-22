@@ -1,14 +1,15 @@
 export interface Product {
-  
-  name: string;
+
+  title: string;
   categoria: string;
   description: string;
-  imageUrl: string;
-  ano: string;
-  score: string;
-  treiler: string;
-  gameplay: string;
+  CoverImageUrl: string;
+  year: number;
+  imdbScore: number;
+  trailerYouTubeUrl: string;
+  gameplayYouTubeUrl: string;
 }
+
 
 export interface ProductUpdate {
   product: Product;

@@ -1,8 +1,7 @@
-import { Button, Input } from "@mui/material";
+import { Button, Input, Checkbox, FormControlLabel } from "@mui/material";
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { Container, Content, Label, LabelSignin, Strong, Teste, Teste1 } from "./style";
-import * as yup from "yup";
 import useAuth from "Auth/UseAuth/UseAuth";
 
 
@@ -13,31 +12,25 @@ const Cadastrar = () => {
   const [senha, setSenha] = useState("");
   const [error, setError] = useState("");
   const [cpf, setCpf] = useState("");
+  const [isAdmin, setIsAdmin] = useState(false);
   const navigate = useNavigate();
- const  {cadastrar}  = useAuth();
-const loginSchema = yup.object().shape({
-  email: yup.string().email().required(),
-  password: yup.string().required().min(5),
-});
+  const { cadastrar } = useAuth();
 
-  const handleSignup = () => {
+
+  const handleSignup = async () => {
     if (!email || !senha || !cpf || !name) {
       setError("Preencha todos os campos");
       return;
-   
+
     }
-     const res = cadastrar(email, senha);
-     if (res) {
-       setError(res);
-       return;
-     }
-     console.log(res, "dtdtdt")
+    const res = await cadastrar(email, senha, cpf, name, isAdmin);
+    if (!res.error) {
+      alert("Usuário cadatrado com sucesso!");
+      navigate("/")
+    }else{
+      alert("Erro ao cadastrar usuario" + JSON.stringify(res));
+    }
 
-
-    alert("Usuário cadatrado com sucesso!");
-    navigate("/");
-
-    
   };
 
   return (
@@ -47,12 +40,6 @@ const loginSchema = yup.object().shape({
         <Input
           type="name"
           placeholder="Digite seu Nome"
-          value={name}
-          onChange={(e) => [setName(e.target.value), setError("")]}
-        />
-        <Input
-          type="username"
-          placeholder="Digite seu sobrenome"
           value={name}
           onChange={(e) => [setName(e.target.value), setError("")]}
         />
@@ -70,19 +57,19 @@ const loginSchema = yup.object().shape({
           onChange={(e) => [setSenha(e.target.value), setError("")]}
         />
         <Input
-          
           type="string"
           placeholder="Digite seu CPF"
           value={cpf}
           onChange={(e) => [setCpf(e.target.value), setError("")]}
         />
-        <Input
-        
-          type="string"
-          placeholder="Digite seu se e admin"
-          value={cpf}
-          onChange={(e) => [setCpf(e.target.value), setError("")]}
+        <FormControlLabel
+          label="Administrador?"
+          control={<Checkbox
+            checked={isAdmin}
+            onChange={(e) => [setIsAdmin(e.target.checked), setError("")]} />
+          }
         />
+
         <Teste> {error}</Teste>
         <Teste1>
           <Button onClick={handleSignup}> Inscreva-se </Button>

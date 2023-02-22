@@ -1,19 +1,14 @@
 import { JogosItem } from "components/JogoItem/JogoItem";
 import { Jogos } from "components/TodosJogos/Interface";
-import { jogos } from "Helpers/Endpoints/Jogos";
-
-import { get } from "http";
 import { products } from "mock/JogosItens";
-import React, { Children, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { ProductService } from "Services/JogosServices";
-import { getEnabledCategories } from "trace_events";
 import {
   Button,
   Card,
   Categoria,
   ListaJogoHeader,
-  ListaJogoTitle,
-  ListaJogoTodos,
+  ListaJogoTitle
 } from "./style";
 
 
@@ -23,7 +18,9 @@ interface ListaJogoProps {
 
 function ListaJogo({ children }: ListaJogoProps) {
   const [produtos, definirProdutos] = useState(products);
-  const handleSelection = (product: Jogos) => {};
+  const handleSelection = (product: Jogos) => {
+  };
+
   function filtrarPorCategoria(categoria: any) {
     const resultadoDoFiltro = products.filter(
       (product) => product.categoria === categoria
@@ -31,14 +28,15 @@ function ListaJogo({ children }: ListaJogoProps) {
 
     definirProdutos(resultadoDoFiltro);
   }
-  const todosJogos = () =>{
-       ProductService.getLista().then((listajogos) =>
-         definirProdutos(listajogos)
-       ); 
-  }
+
+  const todosJogos = () => {
+    ProductService.getLista().then((listajogos) =>
+      definirProdutos(listajogos)
+    );
+  };
   useEffect(() => {
- todosJogos()
-     
+    todosJogos();
+
   }, []);
 
   return (
@@ -49,7 +47,7 @@ function ListaJogo({ children }: ListaJogoProps) {
             <Categoria>
               <Button
                 onClick={() => {
-               todosJogos()
+                  todosJogos();
                 }}
               >
                 {" "}

@@ -1,6 +1,6 @@
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { ErrorResponse } from "components/Api/Error";
-import { jogosResponse } from "components/Api/Jogos";
+//import { jogosResponse } from "components/Api/Jogos";
 import { QueryKey } from "components/Api/QueryKey";
 import { User, UserResponse, UserUpdate } from "components/Api/Users";
 import EdirtarUsuarios from "components/EditarUsuarios/EditarUsuario";

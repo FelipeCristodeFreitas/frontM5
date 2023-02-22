@@ -1,7 +1,6 @@
-import { HTMLAttributes, useEffect, useState } from "react";
+import React, { HTMLAttributes, useEffect, useState } from "react";
 import {
   AddCard,
-  EditForm,
   ManageProducts1,
   ManageProductsActions,
   ManageProductsActionsCancel,
@@ -10,8 +9,19 @@ import {
   ManageProductsContentAdd,
   ManageProductsSub,
   ManageProductsTitle,
-  TesteCard,
+  TesteCard
 } from "./style";
+import {
+  FormControl,
+  InputLabel,
+  Select,
+  SelectChangeEvent,
+  Theme,
+  useTheme,
+  OutlinedInput,
+  MenuItem,
+  TextField
+} from "@mui/material";
 import ListAltIcon from "@mui/icons-material/ListAlt";
 import { Jogos } from "components/TodosJogos/Interface";
 import { useMutation, useQuery } from "@tanstack/react-query";
@@ -21,12 +31,52 @@ import EditJogo from "pages/EditarJogo/Editar";
 import { products } from "mock/JogosItens";
 import { ErrorResponse } from "components/Api/Error";
 import { jogosResponse, Product } from "components/Api/Jogos";
+
 type ManageProductsType = HTMLAttributes<HTMLDivElement>;
 
 type ManageProductsProps = {} & ManageProductsType;
 
+
+const ITEM_HEIGHT = 48;
+const ITEM_PADDING_TOP = 8;
+const MenuProps = {
+  PaperProps: {
+    style: {
+      maxHeight: ITEM_HEIGHT * 4.5 + ITEM_PADDING_TOP,
+      width: 250
+    }
+  }
+};
+
+const names = [""];
+
+function getStyles(name: string, personName: string[], theme: Theme) {
+  return {
+    fontWeight:
+      personName.indexOf(name) === -1
+        ? theme.typography.fontWeightRegular
+        : theme.typography.fontWeightMedium
+  };
+}
+
+
 const CadastrarJogos = ({ ...props }: ManageProductsProps) => {
-  const [jogos, setJogos] = useState<jogosResponse[]>([]);
+  const theme = useTheme();
+
+  const [personName, setPersonName] = React.useState<string[]>([]);
+
+  const handleChange = (event: SelectChangeEvent<typeof personName>) => {
+    const {
+      target: { value }
+    } = event;
+    setPersonName(
+      // On autofill we get a stringified value.
+      typeof value === "string" ? value.split(",") : value
+    );
+  };
+
+  const [jogos, setJogos] = useState<Jogos[]>([]);
+
   const { data: productsData } = useQuery(
     [QueryKey.JOGOS],
     ProductService.getLista
@@ -34,38 +84,38 @@ const CadastrarJogos = ({ ...props }: ManageProductsProps) => {
 
   // adicionar
   const add = useMutation(ProductService.create, {
-    onSuccess: (data: jogosResponse & ErrorResponse) => {
+    onSuccess: (data: Jogos & ErrorResponse) => {
       if (data.statusCode) {
         return;
       }
 
-      const productList = [...products, data as jogosResponse];
+      const productList = [...products, data as Jogos];
       setJogos(productList);
     },
     onError: () => {
       console.error("Erro ao adicionar um jogo");
-    },
+    }
   });
 
   // editar
   const update = useMutation(ProductService.updateById, {
-    onSuccess: (data: jogosResponse & ErrorResponse) => {
+    onSuccess: (data: Jogos & ErrorResponse) => {
       if (data.statusCode) {
         return;
       }
 
       const editedUsers = products.map((i) =>
-        data.id === i.id ? (data as jogosResponse) : i
+        data.id === i.id ? (data as Jogos) : i
       );
       setJogos(editedUsers);
     },
     onError: () => {
       console.error("Erro ao atualizar o jogo");
-    },
+    }
   });
 
   // remover jogo
-  const remove = useMutation(ProductService.deleteById,{
+  const remove = useMutation(ProductService.deleteById, {
 
     onSuccess: (data: jogosResponse & ErrorResponse) => {
       if (data.statusCode) {
@@ -77,7 +127,7 @@ const CadastrarJogos = ({ ...props }: ManageProductsProps) => {
     },
     onError: () => {
       console.error("Erro ao remover o Jogo");
-    },
+    }
   });
 
   let jogosEditados: Jogos[] = [];
@@ -98,7 +148,7 @@ const CadastrarJogos = ({ ...props }: ManageProductsProps) => {
     ano: "",
     score: "",
     treiler: "",
-    gameplay: "",
+    gameplay: ""
   };
 
   const [isAdding, setIsAdding] = useState(false);
@@ -111,24 +161,24 @@ const CadastrarJogos = ({ ...props }: ManageProductsProps) => {
   const productIsValid = () =>
     Boolean(
       jogoToAdd.name.length &&
-        jogoToAdd.categoria.length &&
-        jogoToAdd.description.length &&
-        jogoToAdd.imageUrl.length &&
-        jogoToAdd.ano.length &&
-        jogoToAdd.score.length &&
-        jogoToAdd.treiler.length &&
-        jogoToAdd.gameplay.length
+      jogoToAdd.categoria.length &&
+      jogoToAdd.description.length &&
+      jogoToAdd.imageUrl.length &&
+      jogoToAdd.ano.length &&
+      jogoToAdd.score.length &&
+      jogoToAdd.treiler.length &&
+      jogoToAdd.gameplay.length
     );
 
   const productFormatter = (toFormat: typeof form): Product => ({
-    name: toFormat.name,
+    title: toFormat.name,
     categoria: toFormat.categoria,
     description: toFormat.description,
-    imageUrl: toFormat.imageUrl,
-    ano: toFormat.ano,
-    score: toFormat.score,
-    treiler: toFormat.treiler,
-    gameplay: toFormat.gameplay,
+    CoverImageUrl: toFormat.imageUrl,
+    year: parseInt(toFormat.ano),
+    imdbScore: parseInt(toFormat.score),
+    trailerYouTubeUrl: toFormat.treiler,
+    gameplayYouTubeUrl: toFormat.gameplay
   });
 
   const [cancel, setCancel] = useState(false);
@@ -148,11 +198,11 @@ const CadastrarJogos = ({ ...props }: ManageProductsProps) => {
     );
 
     if (canAdd) add.mutate(productFormatted);
-    setTimeout(() => handleCancel(), 300);
     setJogoToAdd(form);
     setIsAdding(false);
+
   };
-  const handleDelete = (productToDelete: jogosResponse) => {
+  const handleDelete = (productToDelete: Jogos) => {
     remove.mutate(productToDelete.id);
     handleCancel();
   };
@@ -178,78 +228,134 @@ const CadastrarJogos = ({ ...props }: ManageProductsProps) => {
             <AddCard>
               <TesteCard>
                 <div>
-                  <EditForm
-                    type="text"
-                    placeholder="Nome"
-                    success={Boolean(jogoToAdd.name.length)}
-                    value={jogoToAdd.name}
-                    onChange={({ target }) =>
-                      handleAddChange("name", target.value)
-                    }
-                  />
-                  <EditForm
-                    type="text"
-                    placeholder="categoria"
-                    success={Boolean(jogoToAdd.categoria.length)}
-                    value={jogoToAdd.categoria}
-                    onChange={({ target }) =>
-                      handleAddChange("categoria", target.value)
-                    }
-                  />
-                  <EditForm
-                    type="text"
-                    placeholder="Descrição"
-                    success={Boolean(jogoToAdd.description.length)}
-                    value={jogoToAdd.description}
-                    onChange={({ target }) =>
-                      handleAddChange("description", target.value)
-                    }
-                  />
-                  <EditForm
-                    type="text"
-                    placeholder="ImagemUrl"
-                    success={Boolean(jogoToAdd.imageUrl.length)}
-                    value={jogoToAdd.imageUrl}
-                    onChange={({ target }) =>
-                      handleAddChange("imageUrl", target.value)
-                    }
-                  />
-                  <EditForm
-                    type="text"
-                    placeholder="Ano"
-                    success={Boolean(jogoToAdd.ano)}
-                    value={jogoToAdd.ano}
-                    onChange={({ target }) =>
-                      handleAddChange("ano", target.value)
-                    }
-                  />
-                  <EditForm
-                    type="text"
-                    placeholder="Score"
-                    success={Boolean(jogoToAdd.score)}
-                    value={jogoToAdd.score}
-                    onChange={({ target }) =>
-                      handleAddChange("score", target.value)
-                    }
-                  />
-                  <EditForm
-                    type="text"
-                    placeholder="TreilerUrl"
-                    success={Boolean(jogoToAdd.treiler.length)}
-                    value={jogoToAdd.treiler}
-                    onChange={({ target }) =>
-                      handleAddChange("treiler", target.value)
-                    }
-                  />
-                  <EditForm
-                    type="text"
-                    placeholder="GamePlayUrl"
-                    success={Boolean(jogoToAdd.gameplay.length)}
-                    value={jogoToAdd.gameplay}
-                    onChange={({ target }) =>
-                      handleAddChange("gameplay", target.value)
-                    }
-                  />
+                  <FormControl sx={{ m: 1, width: 200 }}>
+                    <TextField
+                      type="text"
+                      size="small"
+
+                      placeholder="Nome"
+                      error={Boolean(jogoToAdd.name.length)}
+                      value={jogoToAdd.name}
+                      onChange={({ target }) =>
+                        handleAddChange("name", target.value)
+                      }
+                    />
+                  </FormControl>
+                  <FormControl sx={{ m: 1, width: 200 }}>
+                    <TextField
+                      type="text"
+                      size="small"
+
+                      placeholder="categoria"
+                      error={Boolean(jogoToAdd.categoria.length)}
+                      value={jogoToAdd.categoria}
+                      onChange={({ target }) =>
+                        handleAddChange("categoria", target.value)
+                      }
+                    />
+                  </FormControl>
+
+                  <FormControl sx={{ m: 1, width: 200 }}>
+                    <InputLabel id="demo-multiple-name-label">Name</InputLabel>
+                    <Select
+                      labelId="demo-multiple-name-label"
+                      id="demo-multiple-name"
+                      multiple
+                      size="small"
+                      value={personName}
+                      onChange={handleChange}
+                      input={<OutlinedInput label="Name" />}
+                      MenuProps={MenuProps}
+                    >
+                      {names.map((name) => (
+                        <MenuItem
+                          key={name}
+                          value={name}
+                          style={getStyles(name, personName, theme)}
+                        >
+                          {name}
+                        </MenuItem>
+                      ))}
+                    </Select>
+                  </FormControl>
+                  <FormControl sx={{ m: 1, width: 200 }}>
+                    <TextField
+                      type="text"
+                      size="small"
+
+                      placeholder="Descrição"
+                      error={Boolean(jogoToAdd.description.length)}
+                      value={jogoToAdd.description}
+                      onChange={({ target }) =>
+                        handleAddChange("description", target.value)
+                      }
+                    />
+                  </FormControl>
+                  <FormControl sx={{ m: 1, width: 200 }}>
+                    <TextField
+                      type="text"
+                      size="small"
+
+                      placeholder="ImagemUrl"
+                      error={Boolean(jogoToAdd.imageUrl.length)}
+                      value={jogoToAdd.imageUrl}
+                      onChange={({ target }) =>
+                        handleAddChange("imageUrl", target.value)
+                      }
+                    />
+                  </FormControl>
+                  <FormControl sx={{ m: 1, width: 200 }}>
+                    <TextField
+                      type="text"
+                      size="small"
+
+                      placeholder="Ano"
+                      error={Boolean(jogoToAdd.ano)}
+                      value={jogoToAdd.ano}
+                      onChange={({ target }) =>
+                        handleAddChange("ano", target.value)
+                      }
+                    />
+                  </FormControl>
+                  <FormControl sx={{ m: 1, width: 200 }}>
+                    <TextField
+                      type="text"
+                      size="small"
+
+                      placeholder="Score"
+                      error={Boolean(jogoToAdd.score)}
+                      value={jogoToAdd.score}
+                      onChange={({ target }) =>
+                        handleAddChange("score", target.value)
+                      }
+                    />
+                  </FormControl>
+                  <FormControl sx={{ m: 1, width: 200 }}>
+                    <TextField
+                      type="text"
+                      size="small"
+
+                      placeholder="TreilerUrl"
+                      error={Boolean(jogoToAdd.treiler.length)}
+                      value={jogoToAdd.treiler}
+                      onChange={({ target }) =>
+                        handleAddChange("treiler", target.value)
+                      }
+                    />
+                  </FormControl>
+                  <FormControl sx={{ m: 1, width: 200 }}>
+                    <TextField
+                      type="text"
+                      size="small"
+
+                      placeholder="GamePlayUrl"
+                      error={Boolean(jogoToAdd.gameplay.length)}
+                      value={jogoToAdd.gameplay}
+                      onChange={({ target }) =>
+                        handleAddChange("gameplay", target.value)
+                      }
+                    />
+                  </FormControl>
                 </div>
               </TesteCard>
             </AddCard>
@@ -260,7 +366,7 @@ const CadastrarJogos = ({ ...props }: ManageProductsProps) => {
               key={index}
               onEdit={editados}
               onCancel={cancel}
-              onDelete={ () => handleDelete(product)}
+              onDelete={() => handleDelete(product)}
             />
           ))}
         </ManageProductsContent>

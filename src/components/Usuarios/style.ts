@@ -1,4 +1,4 @@
-import styled, { css } from "styled-components";
+import styled  from "styled-components";
 
 
 export const ManageUsers = styled.section`
@@ -89,10 +89,6 @@ export const ManageUsersActionsSave = styled.button`
     
   
 `;
-
-const EditFormMixins = {
- 
-};
 
 export const EditForm = styled.input<{ error?: boolean; success?: boolean }>`
  

@@ -6,19 +6,17 @@ import { BrowserRouter } from "react-router-dom";
 import Router from "./router";
 
 const queryClient = new QueryClient();
+
 function App() {
   return (
     <AuthProvider>
-
-    <BrowserRouter>
-    <FavoritoProvider>
-
-      <QueryClientProvider client={queryClient}>
-
-      <Router />
-      </QueryClientProvider>
-    </FavoritoProvider>
-    </BrowserRouter>
+      <BrowserRouter>
+        <FavoritoProvider>
+          <QueryClientProvider client={queryClient}>
+            <Router />
+          </QueryClientProvider>
+        </FavoritoProvider>
+      </BrowserRouter>
     </AuthProvider>
   );
 

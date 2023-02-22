@@ -1,7 +1,7 @@
 
-import React, {Children, useState} from 'react';
+import React, { useState} from 'react';
 
-import FavoriteScreen from "./FavoriteScreen";
+//import FavoriteScreen from "./FavoriteScreen";
 import { Jogos } from "components/TodosJogos/Interface";
 
 interface favoritoContextProps {

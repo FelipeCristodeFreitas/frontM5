@@ -1,15 +1,15 @@
-import styled, { css } from "styled-components";
+import styled  from "styled-components";
 
 
 
 export const ManageProducts1 = styled.section`
 padding: 20px;
-  background-image: url(https://besthqwallpapers.com/Uploads/2-4-2021/160732/thumb2-xbox-green-logo-4k-green-neon-lights-creative-green-abstract-background.jpg);
+  //background-image: url(https://besthqwallpapers.com/Uploads/2-4-2021/160732/thumb2-xbox-green-logo-4k-green-neon-lights-creative-green-abstract-background.jpg);
   background-repeat: no-repeat;
   background-size: cover;
   background-position: center center;
   width: 100vw;
-  margin-top: 4rem;
+  //margin-top: 4rem;
   
 `;
 
@@ -82,7 +82,7 @@ export const AddCard = styled.div`
     justify-content: center;
     align-items: center;
     width: 200px;
-    max-height: 285px;
+    //max-height: 285px;
     box-sizing: border-box;
     padding: 10px 0;
     margin-top: 1rem;
@@ -134,10 +134,8 @@ export const EditForm = styled.input<{ error?: boolean; success?: boolean }>`
 
 export const TesteCard = styled.div`
 EditForm {
-
-  margin-top: 20px;
   display: flex;
-  gap: 10px;
+  gap: 1px;
 }
 `;
 

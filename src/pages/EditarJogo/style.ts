@@ -1,4 +1,4 @@
-import styled, { css } from "styled-components";
+import styled from "styled-components";
 
 export const JogoItem1 = styled.div`
   background: blue;
@@ -205,9 +205,6 @@ export const EditFormGroup = styled.div`
   
 `;
 
-const EditFormMixins = {
-
-};
 
 export const EditForm = styled.input<{ error?: boolean; success?: boolean }>`
 

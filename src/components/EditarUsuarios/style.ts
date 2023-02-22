@@ -1,4 +1,4 @@
-import styled, { css } from "styled-components";
+import styled  from "styled-components";
 
 
 export const EditUser = styled.div`
@@ -92,10 +92,6 @@ export const Delete = styled.button`
    
   
 `;
-
-const EditFormMixins = {
-
-};
 
 export const EditFormGroup = styled.div`
 

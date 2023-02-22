@@ -7,12 +7,12 @@ import {
 
 export const ProductService = {
   getLista: (): Promise<any> =>
-    Api(endpoint.listJogos(), {
+    Api(endpoint.listCategoria(), {
       method: "GET",
     }).then((response) => response.json()),
 
   create: (product: Product) =>
-    Api(endpoint.createJogos(), {
+    Api(endpoint.createCategoria(), {
       method: "POST",
       body: JSON.stringify(product),
       headers: {
@@ -21,13 +21,13 @@ export const ProductService = {
     }).then((response) => response.json()),
 
   getById: (id: string) =>
-    Api(endpoint.jogoById(id), {
+    Api(endpoint.categoriaById(id), {
       method: "GET",
     }).then((response) => response.json()),
 
   updateById: ({ product, id }: ProductUpdate) =>
-    Api(endpoint.updateById(id), {
-      method: "PATCH",
+    Api(endpoint.updateCategoriaById(id), {
+      method: "PUT",
       body: JSON.stringify(product),
       mode: "cors",
       headers: {
@@ -36,7 +36,7 @@ export const ProductService = {
     }).then((response) => response.json()),
 
   deleteById: (id: string) =>
-    Api(endpoint.deleteById(id), {
+    Api(endpoint.deleteCategoriaById(id), {
       method: "DELETE",
     }).then((response) => response.json()),
 };

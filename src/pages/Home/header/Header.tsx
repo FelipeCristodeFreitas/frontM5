@@ -1,44 +1,36 @@
 import {
   Badge,
-  Button,
-  Icon,
+  AppBar,
+  Container,
   IconButton,
   ListItemButton,
-  ListItemIcon,
-  ListItemText,
+  Typography,
+  Box,
+  ListItem,
+  ListItemText
 } from "@mui/material";
 import React, { useContext, useEffect, useState } from "react";
-import { RoutePath } from "Router/routes";
-import { ReactComponent as Logout } from "assets/icons/logout.svg";
 import {
-  BotãoSair,
-  Cabecalho,
-  Cadastrar,
-  Favorito,
-  ImgLogo,
-  Logout1,
-  MenuItemLogout,
-  Pagina,
+  Pagina
 } from "./style";
 import { AuthProvider, useAuthContext } from "Auth/Context/AuthContext";
 import { AddTask, Favorite } from "@mui/icons-material";
 import { useNavigate } from "react-router-dom";
 import { favoritoContext } from "Favoritos/contexts/FavoritoContext";
-import CadastrarJogos from "pages/CadastrarJogos/CadastrarJogos";
-import { useQuery } from "@tanstack/react-query";
-import { QueryKey } from "components/Api/QueryKey";
-import { ProductService } from "Services/JogosServices";
-import { OrderItemType } from "components/TodosJogos/OrderItemType";
-import { Jogos } from "components/TodosJogos/Interface";
+//import CadastrarJogos from "pages/CadastrarJogos/CadastrarJogos";
+//import { useQuery } from "@tanstack/react-query";
+//import { QueryKey } from "components/Api/QueryKey";
+//import { ProductService } from "Services/JogosServices";
+//import { OrderItemType } from "components/TodosJogos/OrderItemType";
+//import { Jogos } from "components/TodosJogos/Interface";
 
 function Header() {
   const [isScrolled, setIsScrolled] = useState(false);
   const { logout } = useAuthContext();
-  const { data: jogosData } = useQuery(
+  /*const { data: jogosData } = useQuery(
     [QueryKey.JOGOS],
     ProductService.getLista
-  );
-  const [jogos, setJogos] = useState<Jogos[]>([]);
+  );*/
 
   useEffect(() => {
     const handleScroll = () => {
@@ -61,36 +53,50 @@ function Header() {
   const favoritescont = favorites.length;
 
   const favorito = useNavigate();
-  function handleclick() {
-    favorito(`/favoritos`);
-  }
-  const cadastrar = useNavigate();
-  function click() {
-    cadastrar(`/cadastrarJogos`);
-  }
 
-useEffect(()=>{
-  setJogos(jogosData || [] );
-[jogosData]
-});
+  const cadastrar = useNavigate();
+
+  /*useEffect(()=>{
+    setJogos(null || jogosData);
+  });*/
 
   return (
     <header className={`${isScrolled && "bg-red-500"}`}>
       <AuthProvider>
         <Pagina>
-          <header>
-            <Cabecalho>
-              <ImgLogo
-                src="https://i.pinimg.com/736x/bf/21/de/bf21deeef128ed67160f9fddd520036b.jpg"
-                alt=""
-              />
-              <BotãoSair>
-                <ListItemButton onClick={logout}>
-                  <ListItemText primary="Sair" />
-                </ListItemButton>
-              </BotãoSair>
-              <Favorito>
-                <div>
+          <AppBar>
+            <Container maxWidth="xl">
+
+              <Box sx={{ flexGrow: 1, display: { xs: "flex" } }}>
+                <ListItem>
+                  <Typography
+                    variant="h6"
+                    noWrap
+                    component="a"
+                    href="/"
+                    sx={{
+                      mr: 2,
+                      display: { xs: "none", md: "flex" },
+                      fontFamily: "monospace",
+                      fontWeight: 700,
+                      letterSpacing: ".3rem",
+                      color: "inherit",
+                      textDecoration: "none"
+                    }}
+                  >
+                    <img
+                      src="https://i.pinimg.com/736x/bf/21/de/bf21deeef128ed67160f9fddd520036b.jpg"
+                      style={{ width: "70px" }}
+                      alt=""
+                    />
+                  </Typography>
+                </ListItem>
+                <ListItem>
+                  <ListItemButton onClick={logout}>
+                    <ListItemText primary="Sair" />
+                  </ListItemButton>
+                </ListItem>
+                <ListItem>
                   <IconButton
                     size="large"
                     aria-label="show more"
@@ -102,36 +108,38 @@ useEffect(()=>{
                       <Favorite />
                     </Badge>
                   </IconButton>
-                </div>
-              </Favorito>
-              <Cadastrar>
-                <IconButton
-                  size="large"
-                  aria-label="show more"
-                  aria-haspopup="true"
-                  onClick={() => cadastrar(`/cadastrarJogos`)}
-                  color="inherit"
-                >
-                  <Badge>
-                    <AddTask />
-                  </Badge>
-                  &nbsp;cadastrar
-                </IconButton>
-              </Cadastrar>
-              <IconButton
-                size="large"
-                aria-label="show more"
-                aria-haspopup="true"
-                onClick={() => cadastrar(`/gerenciarusuarios`)}
-                color="inherit"
-              >
-                <Badge>
-                  <AddTask />
-                </Badge>
-                &nbsp;cadastrar usuarios
-              </IconButton>
-            </Cabecalho>
-          </header>
+                </ListItem>
+                <ListItem>
+                  <IconButton
+                    size="large"
+                    aria-label="show more"
+                    aria-haspopup="true"
+                    onClick={() => cadastrar(`/cadastrarJogos`)}
+                    color="inherit"
+                  >
+                    <Badge>
+                      <AddTask />
+                    </Badge>
+                    &nbsp;cadastrar
+                  </IconButton>
+                </ListItem>
+                <ListItem>
+                  <IconButton
+                    size="large"
+                    aria-label="show more"
+                    aria-haspopup="true"
+                    onClick={() => cadastrar(`/gerenciarusuarios`)}
+                    color="inherit"
+                  >
+                    <Badge>
+                      <AddTask />
+                    </Badge>
+                    &nbsp;cadastrar usuarios
+                  </IconButton>
+                </ListItem>
+              </Box>
+            </Container>
+          </AppBar>
         </Pagina>
       </AuthProvider>
     </header>
