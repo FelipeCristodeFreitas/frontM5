@@ -60,7 +60,7 @@ export const AuthProvider: React.FC<IAuthProviderProps> = ({ children }) => {
   const cadastrar = async (email: string, password: string, cpf: string, name: string, isAdmin: boolean) => {
     console.log({ email, password, cpf, name, isAdmin });
     try {
-      const result = await axios.post("http://localhost:3333/users", { email, password, cpf, name, isAdmin });
+      const result = await axios.post("https://m5-orpin.vercel.app/users", { email, password, cpf, name, isAdmin });
       return result.data
     } catch (e) {
       return {error: true, errorMessage: e}
