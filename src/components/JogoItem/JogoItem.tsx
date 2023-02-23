@@ -42,9 +42,9 @@ export const JogosItem = ({ product, onSelect }: JogoItemProps) => {
   };
 
   const isFavorite = favorites.some((prod) => prod.title === product.title);
-
+  //console.log(product)
   return (
-    
+
       <JogoItem1 role="listitem">
         <div>
           <JogoItemImage src={product.CoverImageUrl} />
@@ -55,8 +55,8 @@ export const JogosItem = ({ product, onSelect }: JogoItemProps) => {
             <Favorite color={isFavorite ? `error` : `disabled`} />
           </IconButton>
           <JogoItemName>{product.title}</JogoItemName>
-          
-          
+
+
                 <JogoItemDescription>
                   Descrição: {product.description}
                 </JogoItemDescription>
@@ -100,10 +100,10 @@ export const JogosItem = ({ product, onSelect }: JogoItemProps) => {
                 </JogoItemTreiler>
                 <JogoItemScore>Score: {product.imdbScore}</JogoItemScore>
               </div>
-  
-       
-         
+
+
+
       </JogoItem1>
-   
+
   );
 };

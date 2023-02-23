@@ -11,7 +11,6 @@ const Home = () => {
         <div>
           <Header />
           <main>
-            <div className="card"></div>
             <Banner>
               <ListaJogo>
               </ListaJogo>

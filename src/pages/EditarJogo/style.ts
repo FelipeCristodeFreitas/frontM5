@@ -119,10 +119,10 @@ export const EditProduct1 = styled.div`
     max-width: 200px;
     width: 100%;
     min-height: 25px;
-    max-height: 285rem;
+    //max-height: 285rem;
     padding-top: 1rem;
-   margin-top: -4rem;
-    box-sizing: border-box;
+    margin-top: -4rem;
+    //box-sizing: border-box;
   
 `;
 
@@ -188,10 +188,10 @@ export const EditFormGroup = styled.div`
     padding: 10px 0;
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
+    //justify-content: space-between;
+  margin-top: 10rem;
     gap: 10px;
     align-items: center;
-    margin-top: 12rem;
     /* Chrome */
     input::-webkit-outer-spin-button,
     input::-webkit-inner-spin-button {

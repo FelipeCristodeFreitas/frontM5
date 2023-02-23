@@ -46,7 +46,7 @@ export const ManageProductsSub = styled.h2`
 
 export const ManageProductsContent = styled.div`
   margin-top: 2rem;
-  height: 600px;
+  //height: 600px;
   padding-bottom: 20px;
   box-sizing: border-box;
   display: flex;

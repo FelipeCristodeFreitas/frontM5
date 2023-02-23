@@ -5,7 +5,7 @@ import {
   ProductUpdate,
 } from "../components/Api/Jogos";
 
-export const ProductService = {
+export const CategoriasServices = {
   getLista: (): Promise<any> =>
     Api(endpoint.listCategoria(), {
       method: "GET",

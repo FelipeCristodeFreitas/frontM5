@@ -1,18 +1,17 @@
 import styled from "styled-components";
 
 
-
 export const ListaJogoHeader = styled.div`
-  
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 0 20px;
-  
+
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 20px;
+
 `;
 
 export const ListaJogoTitle = styled.div`
- margin-top: 1rem;
+  margin-top: 1rem;
 
 `;
 
@@ -30,18 +29,18 @@ export const ListaJogoTodos = styled.div`
   flex-wrap: wrap;
 `;
 export const Card = styled.div`
-margin-left: -2rem;
-margin-top: 1rem;
+  margin-left: -2rem;
+  margin-top: 1rem;
   display: flex;
-margin-left: 3rem;
+  margin-left: 3rem;
   flex-direction: row;
   flex-wrap: wrap;
   justify-content: space-evenly;
-  
+
 `;
 export const Categoria = styled.div`
 
-  margin-top: 1.5rem;
+  margin-top: 8rem;
   align-items: flex-end;
   justify-content: space-evenly;
   flex-direction: row;
@@ -58,22 +57,21 @@ export const Button = styled.button`
   border: none;
   font-size: 2rem;
   cursor: pointer;
-  
+
 `;
 
 
-
-
 export const Teste = styled.div`
-margin-top: 2rem;
-margin-left: 2rem;
-background-color: #90ee90;
+  margin-top: 2rem;
+  margin-left: 2rem;
+  background-color: #90ee90;
 
 `;
 export const Modal = styled.div`
   height: 3px;
   overflow: hidden;
   position: relative;
+
   ::before {
     content: "";
     position: absolute;
@@ -81,9 +79,11 @@ export const Modal = styled.div`
     width: 100%;
     height: 100px;
     background: linear-gradient(transparent, rgba(red));
+
     .card.active {
       height: auto;
     }
+
     .card.active ::before {
       visibility: hidden;
     }
@@ -99,12 +99,14 @@ export const Botaomais = styled.button`
     justify-content: center;
     background-color: yellow;
     cursor: pointer;
+
     :hover {
       background-color: green;
       color: red;
       transition: all 0.2s ease-in-out;
     }
   }
+
   align-items: center;
   border: none;
   padding: 3px;
@@ -115,6 +117,7 @@ export const Botaomais = styled.button`
   font-weight: bolder;
   cursor: pointer;
   font-size: 16px;
+
   :hover {
     background-color: green;
     color: green;
