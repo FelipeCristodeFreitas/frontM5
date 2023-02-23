@@ -5,7 +5,7 @@ import { jogos}  from "./Jogos";
 
 
 export const endpoint = {
-  baseUrl: "http://localhost:3333",
+  baseUrl: "https://m5-orpin.vercel.app",
   ...jogos,
   ...usuarios,
   ...categorias,
